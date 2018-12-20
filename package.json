@@ -10,6 +10,6 @@
   },
   "scripts": {
     "dev": "vuepress dev blog",
-    "build": "vuepress build blog && cp post/index.html ./"
+    "build": "vuepress build blog"
   }
 }
