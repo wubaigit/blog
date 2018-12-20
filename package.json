@@ -1,0 +1,15 @@
+{
+  "name": "wubai.github.io",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/wubaigit/wubai.github.io.git",
+  "author": "wubohong <wubohong@codemao.cn>",
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^0.14.8"
+  },
+  "scripts": {
+    "dev": "vuepress dev blog",
+    "build": "vuepress build blog && cp post/index.html ./"
+  }
+}
