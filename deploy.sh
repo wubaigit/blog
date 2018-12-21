@@ -6,6 +6,7 @@ set -e
 yarn build
 
 cd ./blog/.vuepress/dist
+git init
 git add -A
 git commit -m 'deploy'
 
