@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "vuepress dev blog",
     "build": "vuepress build blog",
-    "push": "git push origin master"
+    "push": "git push origin master",
+    "blog:push": "bash ./deploy.sh"
   }
 }
