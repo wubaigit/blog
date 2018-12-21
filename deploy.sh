@@ -3,13 +3,12 @@
 # 确保脚本抛出遇到的错误
 set -e
 
-git init
+yarn build
+
+cd ./blog/.vuepress/dist
 git add -A
-git commit -m 'init'
+git commit -m 'deploy'
 
-git config --local user.name "{name}"
-git config --local user.email {email}
-
-git push -f git@github.com:wubaigit/wubai-blog.git master
+git push -f git@github.com:wubaigit:wubai-blog.git master:gh-pages
 
 cd -
