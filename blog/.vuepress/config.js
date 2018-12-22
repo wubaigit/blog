@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Wubai\'s blog',
+  title: '我思故我在',
   base: '/wubai-blog/',
   themeConfig: {
     sidebar: [
@@ -13,6 +13,7 @@ module.exports = {
         title: '目录',
         children: [
           '/content/01',
+          '/content/02',
         ],
       },
     ],
