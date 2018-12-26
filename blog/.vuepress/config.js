@@ -14,6 +14,11 @@ module.exports = {
         children: [
           '/content/01',
           '/content/02',
+          '/content/03',
+          '/content/04',
+          '/content/05',
+          '/content/06',
+          '/content/07',
         ],
       },
     ],

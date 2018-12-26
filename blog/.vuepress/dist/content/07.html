@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>2018年12月26日 | 我思故我在</title>
+    <meta name="description" content="">
+    
+    
+    <link rel="preload" href="/wubai-blog/assets/css/0.styles.08db41c5.css" as="style"><link rel="preload" href="/wubai-blog/assets/js/app.ed00edc7.js" as="script"><link rel="preload" href="/wubai-blog/assets/js/5.377de21f.js" as="script"><link rel="prefetch" href="/wubai-blog/assets/js/10.6dac9eac.js"><link rel="prefetch" href="/wubai-blog/assets/js/11.cb82ecab.js"><link rel="prefetch" href="/wubai-blog/assets/js/2.285dc9c0.js"><link rel="prefetch" href="/wubai-blog/assets/js/3.f0efc6f9.js"><link rel="prefetch" href="/wubai-blog/assets/js/4.9a3b6d8e.js"><link rel="prefetch" href="/wubai-blog/assets/js/6.5de8adf6.js"><link rel="prefetch" href="/wubai-blog/assets/js/7.083457fb.js"><link rel="prefetch" href="/wubai-blog/assets/js/8.de3eb10c.js"><link rel="prefetch" href="/wubai-blog/assets/js/9.8c627c9a.js">
+    <link rel="stylesheet" href="/wubai-blog/assets/css/0.styles.08db41c5.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/wubai-blog/" class="home-link router-link-active"><!----> <span class="site-name">我思故我在</span></a> <div class="links" style="max-width:nullpx;"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><!---->  <ul class="sidebar-links"><li><div class="sidebar-group first collapsable"><p class="sidebar-heading"><span>首页</span> <span class="arrow right"></span></p> <!----></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading open"><span>目录</span> <span class="arrow down"></span></p> <ul class="sidebar-group-items"><li><a href="/wubai-blog/content/01.html" class="sidebar-link">使用 VuePress + Github Pages 搭建博客</a></li><li><a href="/wubai-blog/content/02.html" class="sidebar-link">02</a></li><li><a href="/wubai-blog/content/03.html" class="sidebar-link">03</a></li><li><a href="/wubai-blog/content/04.html" class="sidebar-link">2018年12月25日</a></li><li><a href="/wubai-blog/content/05.html" class="sidebar-link">2018年12月25日</a></li><li><a href="/wubai-blog/content/06.html" class="sidebar-link">2018年12月26日</a></li><li><a href="/wubai-blog/content/07.html" class="active sidebar-link">2018年12月26日</a></li></ul></div></li></ul> </div> <div class="page"> <div class="content"><h1 id="_2018年12月26日"><a href="#_2018年12月26日" aria-hidden="true" class="header-anchor">#</a> 2018年12月26日</h1> <div class="tip custom-block"><p class="custom-block-title">TIP</p> <p>讲一讲工作上遇到过的解码问题</p></div> <p>工作中遇到一个需求调研，要求往图片文件数据中插入一段 xml 数据，不改变图片显示情况，同时要求，当用户上传这张图片的时候，我们能够从中获取数据。<br></p> <p>首先讲讲，如何生成图片，这里使用的是一个叫 <code>canvg-browser</code> 的库。<br></p> <div class="language-ts extra-class"><pre class="language-ts"><code>
+<span class="token keyword">const</span> getCanvasWhenRenderCompletely <span class="token operator">=</span> <span class="token keyword">async</span><span class="token punctuation">(</span>canvas<span class="token punctuation">:</span>HTMLCanvasElement<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span>resolve<span class="token punctuation">:</span><span class="token punctuation">(</span>res<span class="token punctuation">:</span>HTMLCanvasElement<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token builtin">any</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">canvg</span><span class="token punctuation">(</span>canvas<span class="token punctuation">,</span> xmlData<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> generatePicture <span class="token operator">=</span> <span class="token keyword">async</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> canvas <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'canvas'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  document<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>canvas<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> xmlData <span class="token operator">=</span> <span class="token template-string"><span class="token string">`&lt;svg viewBox=&quot;0 0 100 100&quot; width=&quot;100&quot; height=&quot;100&quot;&gt;
+    &lt;image xlink:href=&quot;../assets/20-owl.png&quot;
+      width=&quot;100&quot; height=&quot;100&quot;/&gt;
+  &lt;/svg&gt;`</span></span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> completelyRenderCanvas <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">getCanvasWhenRenderCompletely</span><span class="token punctuation">(</span>canvas<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><p><img src="/wubai-blog/assets/img/20-owl.bace46d2.png" alt></p></div> <div class="page-edit"><!----> <!----></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/wubai-blog/content/06.html" class="prev">
+          2018年12月26日
+        </a></span> <!----></p></div> </div> <!----></div></div>
+    <script src="/wubai-blog/assets/js/app.ed00edc7.js" defer></script><script src="/wubai-blog/assets/js/5.377de21f.js" defer></script>
+  </body>
+</html>
