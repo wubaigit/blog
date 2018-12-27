@@ -21,6 +21,7 @@ module.exports = {
           '/content/07',
           '/content/08',
           '/content/09',
+          '/content/11',
         ],
       },
     ],

@@ -65,19 +65,17 @@ class App extends React.Component<{}, IState> {
       previewUrl: '',
     });
   }
-  private generateImage = () => {
-    setTimeout(async() => {
-      const canvas = document.createElement('canvas');
-      document.body.appendChild(canvas);
-      const completeRenderCanvas = await this.getCanvasWhenRenderCompletely(canvas);
-      const canvasBase64 = completeRenderCanvas.toDataURL('image/png');
-      // const canvasBase64Len = canvasBase64.length;
-      // const matchEqual = canvasBase64.slice(canvasBase64Len - 2).match(/=/g);
-      document.body.removeChild(canvas);
-      this.setState({
-        previewUrl: canvasBase64,
-      })
-    }, 100)
+  private generateImage = async() => {
+    const canvas = document.createElement('canvas');
+    document.body.appendChild(canvas);
+    const completeRenderCanvas = await this.getCanvasWhenRenderCompletely(canvas);
+    const canvasBase64 = completeRenderCanvas.toDataURL('image/png');
+    // const canvasBase64Len = canvasBase64.length;
+    // const matchEqual = canvasBase64.slice(canvasBase64Len - 2).match(/=/g);
+    document.body.removeChild(canvas);
+    this.setState({
+      previewUrl: canvasBase64,
+    })
     
     return;
   }
@@ -93,33 +91,91 @@ class App extends React.Component<{}, IState> {
     });
   }
   private insertInfo = () => {
-    const head = `data:image/png;base64,`;
-    const base64Url = this.state.previewUrl.slice(head.length);
-    const resBuffer = new Buffer(base64Url, 'base64');
-    const resStr = new Buffer(xmlData);
+    // const head = `data:image/png;base64,`;
+    // const base64Url = this.state.previewUrl.slice(head.length);
+    // const resBuffer = new Buffer(base64Url, 'base64');
+    // const resStr = new Buffer(xmlData);
     // IEDN crc
-    const res = head + Buffer.concat([resBuffer, resStr]).toString('base64'); // Uint8Array
+    // const res = head + Buffer.concat([resBuffer, resStr]).toString('base64'); // Uint8Array
+    const res = this.generatePNGWithInfo(this.state.previewUrl);
     this.setState({
       previewUrl: res,
     }, () => {
       alert('success');
     });
   }
-  private uploadImage = (e:any) => {
+  private generatePNGWithInfo = (canvasDataURLBase64:string) => {
+    const head = `data:image/png;base64,`;
+    const fileBase64Code = canvasDataURLBase64.slice(head.length);
+    const fileBase64CodeBuffer = Buffer.from(fileBase64Code, 'base64');
+    const insertInfo = 'any string';
+    const insertInfoBuffer = Buffer.from(insertInfo);
+    const res = head + Buffer.concat([fileBase64CodeBuffer, insertInfoBuffer]).toString('base64');
+    return res;
+  }
+  private uploadImage = async(e:any) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.addEventListener('load', (event:any) => {
-      const result = event.target.result;
-      const base64Code = Buffer.from(result).toString('base64');
-      const resBuffer = Buffer.from(base64Code, 'base64');
-      const resData = resBuffer.slice(-xmlData.length).toString();
-      this.setState({
-        data: resData,
-      });
+    // const reader = new FileReader();
+    // reader.addEventListener('load', (event:any) => {
+    //   const result = event.target.result;
+    //   const base64Code = Buffer.from(result).toString('base64');
+    //   const resBuffer = Buffer.from(base64Code, 'base64');
+    //   const resData = resBuffer.slice(-xmlData.length).toString();
+    //   this.setState({
+    //     data: resData,
+    //   });
+    // });
+    // reader.readAsArrayBuffer(file);
+    const info = await this.readInfoFromPNG(file);
+    this.setState({
+      data: info,
     });
-    reader.readAsArrayBuffer(file);
+  }
+  private readInfoFromPNG = async (file:File) => {
+    return new Promise((resolve:(res:string) => void) => {
+      const reader = new FileReader();
+      reader.addEventListener('load', (event:any) => {
+        const result:ArrayBuffer = event.target.result;
+        const base64Code = Buffer.from(result).toString('base64'); 
+        const resBuffer = Buffer.from(base64Code, 'base64');
+
+        const info = this.read(resBuffer);
+        resolve(info);
+        this.read(resBuffer);
+      });
+      reader.readAsArrayBuffer(file);
+    });
+  }
+  private readNameAndLength = (chunk:Buffer) => {
+    const length = chunk.readInt32BE(0);
+    const name = chunk.toString(undefined, 4, 8);
+    return {
+      name,
+      length,
+    };
+  }
+  private read = (buffer:Buffer) => {
+    /**
+     * 前面8个字节是署名域，用来识别该文件是不是 PNG 文件
+     * 随后是数据块，每个数据块包含
+     *  1. Length（长度）4字节
+     *  2. Chunk Type Code（数据块类型码）4字节
+     *  3. Chunk Data（数据块实际内容）可变
+     *  4. CRC（循环冗余检测）4字节
+     */
+    let pos = 8;    
+    while (true) {
+      const chunk = buffer.slice(pos, pos += 8);
+      const {name, length} = this.readNameAndLength(chunk);
+      const crcLength = 4;
+      pos += length + crcLength;
+      if (name === 'IEND') {
+        break;
+      }
+    }
+    const info = buffer.slice(pos).toString();
+    return info;    
   }
 }
 
 export default App;
-// data:image/png;base64,
