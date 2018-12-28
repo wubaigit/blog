@@ -75,8 +75,7 @@ class App extends React.Component<{}, IState> {
     document.body.removeChild(canvas);
     this.setState({
       previewUrl: canvasBase64,
-    })
-    
+    });
     return;
   }
   private getCanvasWhenRenderCompletely = async (
