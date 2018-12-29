@@ -1,6 +1,9 @@
 module.exports = {
-  title: '我思故我在',
+  title: 'Owl',
   base: '/wubai-blog/',
+  head: [
+    ['link', { rel: 'icon', href: '/20-owl.png' }],
+  ],
   themeConfig: {
     sidebar: [
       {
@@ -21,7 +24,10 @@ module.exports = {
           '/content/07',
           '/content/08',
           '/content/09',
+          '/content/10',
           '/content/11',
+          '/content/12',
+          '/content/13',
         ],
       },
     ],
