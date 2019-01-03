@@ -1,0 +1,106 @@
+# [Promise]
+
+Promise 有点类似于 **事件监听器**，但——<br>
+- Promise 只能成功或失败一次，且不能从成功转为失败或者从失败转为成功
+- 如果 promise 已经成功或者失败，且在之后添加了 成功/失败 回调，则将会调用正确的回调，即使事件发生在先。
+
+promise 对象本质上是一个代理对象，但是因为具有 事件监听 的功能而且超级方便，所以往往被用来代理 监听异步事件。
+
+Promise 具有三种状态——<br>
+- pending 初始状态，既不是成功，也不是失败
+- fulfilled 意味着操作成功完成
+- rejected 意味着操作失败
+
+pending 状态的 promise 对象可能会触发 fulfilled 状态并传递一个值给相应的状态处理方法，也可能触发 rejected 状态并传递失败信息。<br>
+当其中任何一种情况出现时，promise 对象的 then 方法绑定的处理方法就会被调用。<br>
+then 方法包含两个参数，onfulfilled 和 onrejected ，都是 Function 类型。在异步操作的完成和绑定处理方法之间不存在竞争。
+
+一个典型的 promise 对象创建步骤：<br>
+```js
+let promise = new Promise((resove, reject) => {
+  // 做任何事情
+  if (/** 成功 */) {
+    resolve('success');
+  } else {
+    reject(Error('fail'));
+  }
+});
+
+const resolve = (result) => {
+  console.log(result);
+};
+
+const reject = (err) => {
+  console.log(err);
+};
+
+promise.then(resolve, reject).catch((err) => {
+  console.log(err);
+});
+```
+
+注：catch 其实本质上是 `then(undefined, func)`，是一个语法糖罢了。
+
+## Promise 的一些有趣的应用
+
+借由将 then 链接在一起来改变值，或依次运行额外的异步操作——<br>
+```js
+let promise = new Promise(function(resolve, reject) {
+  resolve(1);
+});
+
+promise.then(function(val) {
+  console.log(val); // 1
+  return val + 2;
+}).then(function(val) {
+  console.log(val); // 3
+});
+```
+
+并行和顺序——<br>
+```js
+/**
+ * urls 是一个存储了多个链接的数据；
+ * getJSON 是一个请求 JSON 数据的 ajax，会返回一个 Promise
+ */
+urls.reduce(function(sequence, url) {
+  return sequence.then(function() {
+    return getJSON(url);
+  }).then(function(response) {
+    // do something
+  });
+}, Promise.resolve());
+```
+
+reduce() 方法对数组中每个元素执行一个由您定义的 reducer 函数（升序执行），然后将其结果汇总为单个返回值。
+
+```js
+const array1 = [1, 2, 3, 4];
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+console.log(array1.reduce(reducer)); // 10
+console.log(array1.reduce(reducer, 5)); // 15
+```
+
+reduce() 语法：<br>
+```js
+arr.reduce(callback[, initialValue])
+```
+callback 是一个函数，包含四个参数<br>
+- accumulator 累加器累计回调的返回值，是上一次调用回调时返回的累加值，或 initialValue
+- currentValue 数组中当前正在处理的元素
+- currentIndex （可选）数组正在处理的当前元素的索引，如果提供了 initialValue 则起始索引为 0，否则为 1
+- array （可选）调用 reduce() 的数组
+
+initialValue （可选）作为第一次调用 callback 函数时的第一个参数的值，如果没有提供，则使用数组中的第一个元素。在没有初始值的空数组上调用 reduce() 会报错。
+
+回归正传，这里使用 reduce ，将 Promise.resolve() 作为初始值，而后就能按照 urls 的存储顺序请求数据。
+
+**Promise.resolve(value)**<br>
+返回一个状态由给定 value 决定的 Promise 对象。<br>
+如果该值为——<br>
+- 一个 Promise 对象，则直接返回该对象
+- thenable （即，带有 then 方法的对象），返回的 Promise 对象的最终状态由 then 方法执行决定（有时候作为一个兼容其他 promise 库的用法；因为历史原因，在 promise 还未获得 js 的原生支持前，很多时候是作为一个库存在，不同库的具体实现方式有所不同）
+- 空，基本类型或者不带`then`方法的对象 返回的 Promise 对象状态为 fulfilled ，并且将该 value 传递给对应的 then 方法。
+
+**Promise.all(iterable)**

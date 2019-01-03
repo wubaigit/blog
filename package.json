@@ -12,5 +12,8 @@
     "dev": "vuepress dev blog",
     "build": "vuepress build blog",
     "blog:push": "bash ./deploy.sh"
+  },
+  "dependencies": {
+    "pixi": "^0.3.1"
   }
 }

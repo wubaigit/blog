@@ -13,7 +13,7 @@ module.exports = {
         ],
       },
       {
-        title: '目录',
+        title: '杂谈',
         children: [
           '/content/01',
           '/content/02',
@@ -21,15 +21,36 @@ module.exports = {
           '/content/04',
           '/content/05',
           '/content/06',
-          '/content/07',
-          '/content/08',
-          '/content/09',
           '/content/10',
-          '/content/11',
-          '/content/12',
-          '/content/13',
         ],
       },
+      {
+        title: '关于 JS 异步编程笔记',
+        children: [
+          '/content/async/09',
+          '/content/async/promise',
+        ]
+      },
+      {
+        title: '关于 JS 浅薄的编码笔记',
+        children: [
+          '/content/07',
+          '/content/08',
+        ]
+      },
+      {
+        title: '开发环境搭建',
+        children: [
+          '/content/11',
+        ]
+      },
+      {
+        title: '规范',
+        children: [
+          '/content/12',
+          '/content/13',
+        ]
+      }
     ],
     sidebarDepth: 0,
   },
