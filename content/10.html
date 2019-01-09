@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>shell 传递参数 | Owl</title>
+    <meta name="description" content="">
+    <link rel="icon" href="/wubai-blog/20-owl.png">
+    
+    <link rel="preload" href="/wubai-blog/assets/css/0.styles.08db41c5.css" as="style"><link rel="preload" href="/wubai-blog/assets/js/app.4c219921.js" as="script"><link rel="preload" href="/wubai-blog/assets/js/19.aad1b8f4.js" as="script"><link rel="prefetch" href="/wubai-blog/assets/js/10.bef5c67e.js"><link rel="prefetch" href="/wubai-blog/assets/js/11.b72e42c8.js"><link rel="prefetch" href="/wubai-blog/assets/js/12.d1863744.js"><link rel="prefetch" href="/wubai-blog/assets/js/13.22858cd4.js"><link rel="prefetch" href="/wubai-blog/assets/js/14.fcd93087.js"><link rel="prefetch" href="/wubai-blog/assets/js/15.b92e4d21.js"><link rel="prefetch" href="/wubai-blog/assets/js/16.4ad9d868.js"><link rel="prefetch" href="/wubai-blog/assets/js/17.0bfe4e0d.js"><link rel="prefetch" href="/wubai-blog/assets/js/18.465be9ee.js"><link rel="prefetch" href="/wubai-blog/assets/js/2.bbde44a5.js"><link rel="prefetch" href="/wubai-blog/assets/js/20.d1648ea2.js"><link rel="prefetch" href="/wubai-blog/assets/js/21.80222452.js"><link rel="prefetch" href="/wubai-blog/assets/js/22.e7a0c376.js"><link rel="prefetch" href="/wubai-blog/assets/js/23.8fb9f707.js"><link rel="prefetch" href="/wubai-blog/assets/js/24.42821c4f.js"><link rel="prefetch" href="/wubai-blog/assets/js/25.68a565f9.js"><link rel="prefetch" href="/wubai-blog/assets/js/26.40bf583d.js"><link rel="prefetch" href="/wubai-blog/assets/js/27.70e4d306.js"><link rel="prefetch" href="/wubai-blog/assets/js/28.3ffb6c54.js"><link rel="prefetch" href="/wubai-blog/assets/js/3.de795230.js"><link rel="prefetch" href="/wubai-blog/assets/js/4.c3c3f315.js"><link rel="prefetch" href="/wubai-blog/assets/js/5.8c824716.js"><link rel="prefetch" href="/wubai-blog/assets/js/6.3f219668.js"><link rel="prefetch" href="/wubai-blog/assets/js/7.cdce0d92.js"><link rel="prefetch" href="/wubai-blog/assets/js/8.aff989a9.js"><link rel="prefetch" href="/wubai-blog/assets/js/9.33cd7c9c.js">
+    <link rel="stylesheet" href="/wubai-blog/assets/css/0.styles.08db41c5.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/wubai-blog/" class="home-link router-link-active"><!----> <span class="site-name">Owl</span></a> <div class="links" style="max-width:nullpx;"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><!---->  <ul class="sidebar-links"><li><div class="sidebar-group first collapsable"><p class="sidebar-heading"><span>首页</span> <span class="arrow right"></span></p> <!----></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading open"><span>杂谈</span> <span class="arrow down"></span></p> <ul class="sidebar-group-items"><li><a href="/wubai-blog/content/01.html" class="sidebar-link">使用 VuePress + Github Pages 搭建博客</a></li><li><a href="/wubai-blog/content/06.html" class="sidebar-link">关于 git tag</a></li><li><a href="/wubai-blog/content/10.html" class="active sidebar-link">shell 传递参数</a></li><li><a href="/wubai-blog/content/21.html" class="sidebar-link">pylint E1101</a></li></ul></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>JS 笔记</span> <span class="arrow right"></span></p> <!----></div></li></ul> </div> <div class="page"> <div class="content"><h1 id="shell-传递参数"><a href="#shell-传递参数" aria-hidden="true" class="header-anchor">#</a> shell 传递参数</h1> <div class="tip custom-block"><p class="custom-block-title">TIP</p> <p>2018年12月27日<br>
+因为每次使用 <code>create-react-app my-app --scripts-version=react-scripts-ts</code>，很烦，我也记不住……所以干脆直接写成脚本</p></div> <div class="language-create-react-app-ts.sh extra-class"><pre class="language-text"><code>#!/bin/bash
+
+# $0 是运行的shell文件名
+
+create-react-app $1 --scripts-version=react-scripts-ts
+</code></pre></div></div> <div class="page-edit"><!----> <!----></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/wubai-blog/content/06.html" class="prev">
+          关于 git tag
+        </a></span> <span class="next"><a href="/wubai-blog/content/21.html">
+          pylint E1101
+        </a>
+        →
+      </span></p></div> </div> <!----></div></div>
+    <script src="/wubai-blog/assets/js/app.4c219921.js" defer></script><script src="/wubai-blog/assets/js/19.aad1b8f4.js" defer></script>
+  </body>
+</html>
